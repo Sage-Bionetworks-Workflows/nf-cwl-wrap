@@ -22,8 +22,7 @@ process CWL_WORKFLOW {
 
     script:
     """
-    echo ${cwl_url}
-    echo ${cwl_params}
+    cwltool ${cwl_url} ${cwl_params}
     """
 }
 
