@@ -1,2 +1,5 @@
 #nextflow directories
 .nextflow.log
+.nextflow.log.*
+work/
+.nextflow/

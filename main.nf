@@ -12,8 +12,11 @@ process CWL_WORKFLOW {
 
     secret "SYNAPSE_AUTH_TOKEN"
 
+    debug true
+
     input:
-    tuple val(cwl_url), val(cwl_params)
+    val(cwl_url)
+    val(cwl_params)
 
     output:
 
