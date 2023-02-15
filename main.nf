@@ -46,7 +46,7 @@ process EXECUTE_CWL_WORKFLOW {
 
     script:
     """
-    cwltool ${cwl_url} ${cwl_input_file} --debug
+    cwl-runner ${cwl_url} ${cwl_input_file} --debug
     """
 }
 
