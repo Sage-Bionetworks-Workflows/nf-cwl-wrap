@@ -32,20 +32,21 @@ process SYNAPSE_GET {
 process EXECUTE_CWL_WORKFLOW {
     container "quay.io/commonwl/cwltool:3.1.20230213100550"
     containerOptions '-v "$PWD":"$PWD" -w="$PWD"'
+    shell "/usr/bin/env"
 
     secret "SYNAPSE_AUTH_TOKEN"
 
     debug true
 
     input:
-    val(cwl_url)
-    file(cwl_input_file)
+    val cwl_url
+    file cwl_input_file
 
     output:
 
     script:
     """
-    cwl-runner ${cwl_url} ${cwl_input_file}
+    cwltool ${cwl_url} ${cwl_input_file} --debug
     """
 }
 
