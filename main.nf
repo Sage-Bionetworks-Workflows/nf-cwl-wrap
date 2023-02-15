@@ -29,8 +29,9 @@ process SYNAPSE_GET {
 }
 
 //runs cwl workflow using url and params provided
-process RUN_CWL_WORKFLOW {
+process EXECUTE_CWL_WORKFLOW {
     container "quay.io/commonwl/cwltool:3.1.20230213100550"
+    containerOptions '-v "$PWD":"$PWD" -w="$PWD"'
 
     secret "SYNAPSE_AUTH_TOKEN"
 
@@ -38,7 +39,7 @@ process RUN_CWL_WORKFLOW {
 
     input:
     val(cwl_url)
-    val(cwl_input_file)
+    file(cwl_input_file)
 
     output:
 
@@ -50,5 +51,5 @@ process RUN_CWL_WORKFLOW {
 
 workflow {
     SYNAPSE_GET(params.input_file)
-    RUN_CWL_WORKFLOW(params.cwl_url, SYNAPSE_GET.output)
+    EXECUTE_CWL_WORKFLOW(params.cwl_url, SYNAPSE_GET.output)
 }
