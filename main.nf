@@ -23,7 +23,7 @@ process EXECUTE_CWL_WORKFLOW {
     """
     #!/bin/sh
 
-    cwltool ${cwl_file} ${input_file} > output.txt
+    cwltool ${cwl_file} ${input_file}
     """
 }
 
