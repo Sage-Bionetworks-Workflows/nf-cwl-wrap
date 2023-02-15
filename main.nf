@@ -2,7 +2,7 @@
 nextflow.enable.dsl = 2
 
 //url for exmaple CWL workflow
-params.cwl_url = "https://github.com/CRI-iAtlas/iatlas-workflows/blob/develop/Cibersort/workflow/iatlas_workflow/api_workflow.cwl"
+params.cwl_file = "https://github.com/CRI-iAtlas/iatlas-workflows/blob/develop/Cibersort/workflow/iatlas_workflow/api_workflow.cwl"
 //example params file
 params.input_file = "syn51089849"
 
@@ -39,18 +39,18 @@ process EXECUTE_CWL_WORKFLOW {
     debug true
 
     input:
-    val cwl_url
+    val cwl_file
     file cwl_input_file
 
     output:
 
     script:
     """
-    cwl-runner ${cwl_url} ${cwl_input_file} --debug
+    cwl-runner ${cwl_file} ${cwl_input_file}
     """
 }
 
 workflow {
     SYNAPSE_GET(params.input_file)
-    EXECUTE_CWL_WORKFLOW(params.cwl_url, SYNAPSE_GET.output)
+    EXECUTE_CWL_WORKFLOW(params.cwl_file, SYNAPSE_GET.output)
 }
