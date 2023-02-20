@@ -13,18 +13,22 @@ inputs:
     type: string[]
   - id: output_file
     type: string
-  - id: synapse_config
-    type: File
-  - id: destination_id
-    type: string
+  # - id: synapse_config
+  #   type: File
+  # - id: destination_id
+  #   type: string
 
   
-outputs: []
+outputs: 
+
+  output_file:
+    type: File
+    outputSource: format_cell_counts/output_file
    
 steps:
 
   - id: api_query
-    run: ../steps/utils/query_gene_expression.cwl
+    run: https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/utils/iAtlas_API/CWL/query_gene_expression.cwl
     in: 
       - id: cohorts
         source: cohorts
@@ -34,7 +38,7 @@ steps:
       - output_file
       
   - id: format_expression
-    run: ../steps/r_tidy_utils/format_file.cwl
+    run: https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/utils/r_tidy_utils/CWL/format_file.cwl
     in: 
       - id: input_file
         source: api_query/output_file
@@ -56,7 +60,7 @@ steps:
       - output_file
 
   - id: cibersort
-    run: ../steps/cibersort/cibersort.cwl
+    run: https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/Cibersort/workflow/steps/cibersort/cibersort.cwl
     in:
     - id: mixture_file
       source: format_expression/output_file
@@ -64,7 +68,7 @@ steps:
     - cibersort_file
     
   - id: postprocessing
-    run: ../steps/cibersort_aggregate_celltypes/cibersort_aggregate_celltypes.cwl
+    run: https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/Cibersort/workflow/steps/cibersort_aggregate_celltypes/cibersort_aggregate_celltypes.cwl
     in:
     - id: cibersort_file
       source: cibersort/cibersort_file
@@ -72,7 +76,7 @@ steps:
     - aggregated_cibersort_file
     
   - id: format_cell_counts
-    run: ../steps/r_tidy_utils/format_file.cwl
+    run: https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/utils/r_tidy_utils/CWL/format_file.cwl
     in: 
       - id: input_file
         source: postprocessing/aggregated_cibersort_file
@@ -83,16 +87,16 @@ steps:
     out:
       - output_file
 
-  - id: syn_store
-    run: https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/dockstore-tool-synapseclient/v1.3/cwl/synapse-store-tool.cwl
-    in: 
-    - id: synapse_config
-      source: synapse_config
-    - id: file_to_store
-      source: format_cell_counts/output_file
-    - id: parentid
-      source: destination_id
-    out: []
+  # - id: syn_store
+  #   run: https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/dockstore-tool-synapseclient/v1.3/cwl/synapse-store-tool.cwl
+  #   in: 
+  #   - id: synapse_config
+  #     source: synapse_config
+  #   - id: file_to_store
+  #     source: format_cell_counts/output_file
+  #   - id: parentid
+  #     source: destination_id
+  #   out: []
 
 $namespaces:
   s: https://schema.org/
