@@ -1,6 +1,0 @@
-{
-    "cohorts": [
-        "TCGA"
-    ],
-    "output_file": "tcga_cibersort.feather"
-}

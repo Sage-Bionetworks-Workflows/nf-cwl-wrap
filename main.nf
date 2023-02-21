@@ -2,9 +2,9 @@
 nextflow.enable.dsl = 2
 
 //url for exmaple CWL workflow
-params.cwl_file = "https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/nf-cwl-wrap/bwmac/ibcdpe-436/cwl-wrapper/Cibersort/workflow/iatlas_workflow/api_workflow.cwl"
+params.cwl_file = "https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/EPIC/workflow/steps/epic/epic.cwl"
 //example params file
-params.input_file = "https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/nf-cwl-wrap/bwmac/ibcdpe-436/cwl-wrapper/Cibersort/workflow/iatlas_workflow/tcga_test.json"
+params.input_file = "epic.json"
 
 //runs cwl workflow using url and params provided
 process EXECUTE_CWL_WORKFLOW {
