@@ -4,7 +4,7 @@ nextflow.enable.dsl = 2
 //url for exmaple CWL workflow
 params.cwl_file = "https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/EPIC/workflow/steps/epic/epic.cwl"
 //example params file
-params.input_file = "example_inputs/epic.json"
+params.input_file = "${projectDir}/example_inputs/epic.json"
 
 //runs cwl workflow using url and params provided
 process EXECUTE_CWL_WORKFLOW {
