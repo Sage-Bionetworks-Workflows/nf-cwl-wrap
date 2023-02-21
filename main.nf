@@ -11,8 +11,6 @@ process EXECUTE_CWL_WORKFLOW {
     containerOptions = '--entrypoint "" -v "/var/run/docker.sock:/var/run/docker.sock" -v /tmp:/tmp'
     container "quay.io/commonwl/cwltool:3.1.20230213100550"
 
-    secret "SYNAPSE_AUTH_TOKEN"
-
     debug true
 
     input:
