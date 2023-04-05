@@ -6,3 +6,5 @@ ENTRYPOINT [""]
 # Mount directories
 VOLUME /var/run/docker.sock:/var/run/docker.sock
 VOLUME /tmp:/tmp
+
+CMD ["tail", "-f", "/dev/null"]
