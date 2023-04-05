@@ -7,4 +7,9 @@ ENTRYPOINT [""]
 VOLUME /var/run/docker.sock:/var/run/docker.sock
 VOLUME /tmp:/tmp
 
+#install bash
+RUN apk update
+RUN apk upgrade
+RUN apk add bash
+
 CMD ["tail", "-f", "/dev/null"]
