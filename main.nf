@@ -1,7 +1,7 @@
 // Ensure DSL2
 nextflow.enable.dsl = 2
 
-//url for exmaple CWL workflow
+//url for example CWL workflow
 params.cwl_file = "https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/EPIC/workflow/steps/epic/epic.cwl"
 //example params file
 params.input_file = "${projectDir}/example_inputs/epic.json"
