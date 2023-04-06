@@ -9,7 +9,7 @@ params.input_file = "${projectDir}/example_inputs/epic.json"
 //runs cwl workflow using url and params provided
 process EXECUTE_CWL_WORKFLOW {
     containerOptions = '-v "/var/run/docker.sock:/var/run/docker.sock" -v /tmp:/tmp'
-    container "quay.io/commonwl/cwltool:3.1.20230213100550"
+    container "bwmac03570/cwl-wrap:1.0"
 
     input:
     path cwl_file
