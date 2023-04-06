@@ -17,7 +17,9 @@ process EXECUTE_CWL_WORKFLOW {
 
     script:
     """
-    echo "Hello World!"
+    #!/bin/sh
+    
+    cwltool ${cwl_file} ${input_file}
     """
 }
 
