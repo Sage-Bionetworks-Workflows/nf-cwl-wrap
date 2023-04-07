@@ -8,6 +8,7 @@ params.input_file = "${projectDir}/example_inputs/epic.json"
 
 //runs cwl workflow using url and params provided
 process EXECUTE_CWL_WORKFLOW {
+    // containerOptions only work when run locally, aws batch volume mounting in nextflow.config for Tower runs
     containerOptions = '-v "/var/run/docker.sock:/var/run/docker.sock" -v /tmp:/tmp'
     container "ghcr.io/sage-bionetworks-workflows/nf-cwl-wrap:1.0"
 
