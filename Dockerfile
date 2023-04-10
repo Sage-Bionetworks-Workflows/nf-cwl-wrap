@@ -27,14 +27,15 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
 RUN git clone https://github.com/common-workflow-language/cwltool.git && cd cwltool && git checkout 40c338c
 WORKDIR /cwltool
 
-# Install cwltool
-# The following comes directly from the original docker image
+# Install cwltool 
+ENV BLACK_VERSION="22.0"
+# The following comes directly from the original docker image (except for ENV version pinning and install location)
 RUN CWLTOOL_USE_MYPYC=1 MYPYPATH=mypy-stubs pip wheel --no-binary schema-salad \
     --wheel-dir=/wheels .[deps]  # --verbose
 RUN rm /wheels/schema_salad*
-RUN pip install "black~=22.0"
+RUN pip install "black~=$BLACK_VERSION"
 RUN SCHEMA_SALAD_USE_MYPYC=1 MYPYPATH=mypy-stubs pip wheel --no-binary schema-salad \
-    $(grep schema.salad requirements.txt) "black~=22.0" --wheel-dir=/wheels  # --verbose
+    $(grep schema.salad requirements.txt) "black~=$BLACK_VERSION" --wheel-dir=/wheels  # --verbose
 RUN pip install --force-reinstall --no-index --no-warn-script-location \
     --root=/ /wheels/*.whl
 WORKDIR /
