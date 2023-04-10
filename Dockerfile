@@ -1,13 +1,5 @@
 FROM python:3.11
 
-#install apt-get dependencies
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install -y git gcc python3 libxml2-dev libxslt-dev libc-dev
-RUN apt install -y nodejs
-RUN apt-get install -y graphviz libxml2
-RUN apt-get install -y bash
-
 #Add the official Docker (apt-get) repository
 RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
@@ -17,9 +9,19 @@ RUN echo \
     focal stable" \
     | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-# Install Docker - not sure why it won't work unless you update apt-get again
-RUN apt-get update -y 
-RUN apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+#install apt-get dependencies
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
+    git \
+    gcc \
+    python3 \
+    libxml2-dev \
+    libxslt-dev \
+    libc-dev \
+    nodejs \
+    graphviz \
+    libxml2 \
+    bash \
+    docker-ce 
 
 # Clone cwltool repo - specific commit ID to control changes
 RUN git clone https://github.com/common-workflow-language/cwltool.git
