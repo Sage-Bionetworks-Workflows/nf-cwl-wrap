@@ -1,15 +1,16 @@
 // Ensure DSL2
 nextflow.enable.dsl = 2
 
-//url for exmaple CWL workflow
+//url for example CWL workflow
 params.cwl_file = "https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/EPIC/workflow/steps/epic/epic.cwl"
 //example params file
 params.input_file = "${projectDir}/example_inputs/epic.json"
 
 //runs cwl workflow using url and params provided
 process EXECUTE_CWL_WORKFLOW {
-    containerOptions = '--entrypoint "" -v "/var/run/docker.sock:/var/run/docker.sock" -v /tmp:/tmp'
-    container "quay.io/commonwl/cwltool:3.1.20230213100550"
+    // containerOptions only work when run locally, aws batch volume mounting in nextflow.config for Tower runs
+    containerOptions = '-v "/var/run/docker.sock:/var/run/docker.sock" -v /tmp:/tmp'
+    container "ghcr.io/sage-bionetworks-workflows/nf-cwl-wrap:1.0"
 
     input:
     path cwl_file
@@ -18,7 +19,7 @@ process EXECUTE_CWL_WORKFLOW {
     script:
     """
     #!/bin/sh
-
+    
     cwltool ${cwl_file} ${input_file}
     """
 }
