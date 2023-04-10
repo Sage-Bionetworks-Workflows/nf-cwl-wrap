@@ -24,12 +24,11 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
     docker-ce 
 
 # Clone cwltool repo - specific commit ID to control changes
-RUN git clone https://github.com/common-workflow-language/cwltool.git
+RUN git clone https://github.com/common-workflow-language/cwltool.git && cd cwltool && git checkout 40c338c
 WORKDIR /cwltool
-RUN git checkout 40c338c
 
 # Install cwltool
-# The following comes directly form the original docker image
+# The following comes directly from the original docker image
 RUN CWLTOOL_USE_MYPYC=1 MYPYPATH=mypy-stubs pip wheel --no-binary schema-salad \
     --wheel-dir=/wheels .[deps]  # --verbose
 RUN rm /wheels/schema_salad*
