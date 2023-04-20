@@ -3,43 +3,46 @@ nextflow.enable.dsl = 2
 
 params.s3_file = "s3://bwmac-nextflow-test-bucket/s3_file.csv"
 //url for example CWL workflow
-params.cwl_file = "https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/Immune_Subtype_Clustering/workflow/steps/immune_subtype_clustering/immune_subtype_clustering.cwl"
+params.cwl_file = "https://raw.githubusercontent.com/BWMac/iatlas-workflows/develop/Immune_Subtype_Clustering/workflow/steps/immune_subtype_clustering/immune_subtype_clustering.cwl"
 //example params file
-// params.input_file = "${projectDir}/example_inputs/epic.json"
+params.json_file_name = "immune_subtype_clustering_input.json"
 
 
 process STAGE_INPUTS {
-    debug true
-
     input:
     tuple path(input_file), path(data_file)
+    path(cwl_file)
 
     output:
-    path input_file
+    stdout
 
     script:
     """
     mkdir -p \$PWD/input
     mv ${input_file} \$PWD/input/
     mv ${data_file} \$PWD/input/
+    mv ${cwl_file} \$PWD/input/
+    echo \$PWD/input/
     """
 }
 
 //runs cwl workflow using url and params provided
 process EXECUTE_CWL_WORKFLOW {
+    debug true
     // containerOptions only work when run locally, aws batch volume mounting in nextflow.config for Tower runs
-    containerOptions = '-v "/var/run/docker.sock:/var/run/docker.sock" -v /tmp:/tmp'
+    containerOptions = '-v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp -v /input:/input'
     container "ghcr.io/sage-bionetworks-workflows/nf-cwl-wrap:1.0"
 
     input:
+    path input_dir
     path cwl_file
-    path input_file
+    val json_file_name
 
     script:
     """
     #!/bin/sh
-    
-    cwltool ${cwl_file} ${input_file}
+    cd input
+    cwltool ${cwl_file} ${json_file_name}
     """
 }
 
@@ -47,8 +50,8 @@ workflow {
     file_ch = Channel.fromPath(params.s3_file)
                 .splitCsv(header:true)
                 .map { row -> tuple(row.input_file, row.data_file) }
-    STAGE_INPUTS(file_ch)
+    STAGE_INPUTS(file_ch, params.cwl_file)
     // ch_cwl_file = Channel.fromPath(params.cwl_file)
     // ch_input_file = Channel.fromPath(params.input_file)
-    // EXECUTE_CWL_WORKFLOW(ch_cwl_file, ch_input_file)
+    EXECUTE_CWL_WORKFLOW(STAGE_INPUTS.output, params.cwl_file, params.json_file_name)
 }
