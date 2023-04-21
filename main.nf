@@ -11,7 +11,7 @@ params.json_file_name = "immune_subtype_clustering_input.json"
 process STAGE_INPUTS {
     debug true
 
-    container "debian:stable-20230411"
+    container "ubuntu:22.04"
 
     input:
     tuple path(input_file), path(data_file)
@@ -22,6 +22,7 @@ process STAGE_INPUTS {
 
     script:
     """
+    tail -f /dev/null
     mkdir -p \$PWD/input
     mv ${input_file} \$PWD/input/
     mv ${data_file} \$PWD/input/
