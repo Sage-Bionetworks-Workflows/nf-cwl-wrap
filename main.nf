@@ -1,7 +1,7 @@
 // Ensure DSL2
 nextflow.enable.dsl = 2
 
-params.s3_file = "s3://bwmac-nextflow-test-bucket/s3_file.csv"
+params.s3_file = "s3://iatlas-project-tower-bucket/s3_file.csv"
 //url for example CWL workflow
 params.cwl_file = "https://raw.githubusercontent.com/BWMac/iatlas-workflows/develop/Immune_Subtype_Clustering/workflow/steps/immune_subtype_clustering/immune_subtype_clustering.cwl"
 //example params file
