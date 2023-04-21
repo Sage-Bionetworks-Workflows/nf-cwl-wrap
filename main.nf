@@ -9,6 +9,10 @@ params.json_file_name = "immune_subtype_clustering_input.json"
 
 
 process STAGE_INPUTS {
+    debug true
+
+    container "debian:stable-20230411"
+
     input:
     tuple path(input_file), path(data_file)
     path(cwl_file)
