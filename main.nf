@@ -22,7 +22,6 @@ process STAGE_INPUTS {
 
     script:
     """
-    tail -f /dev/null
     mkdir -p \$PWD/input
     mv ${input_file} \$PWD/input/
     mv ${data_file} \$PWD/input/
