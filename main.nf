@@ -17,7 +17,7 @@ process EXECUTE_CWL_WORKFLOW {
     tuple path(input_file), path(data_file)
 
     output:
-    path "*.tsv"
+    path "**"
 
     script:
     """
