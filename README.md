@@ -2,12 +2,21 @@
 
 ## Introduction
 
-`nf-cwl-wrap` is a Nextflow wrapper for CWL workflows. Currently, it only supports executing CWL workflows on a local machine using `cwltool` in a single process workflow. Eventually, it will be fully supported for Nextflow Tower runs. 
+`nf-cwl-wrap` is a Nextflow wrapper for CWL workflows. It uses `cwltool` to execute workflows and can be used both locally and on Nextflow Tower.
 
 ## Workflow Summary
 
-`nf-cwl-wrap` takes a CWL workflow (either local file or raw GitHub user content URL) and an input file (either in YAML or JSON format) as inputs. It then passes these two parameters to a single Nextflow process which executes the CWL workflow using `cwltool`. Any ouputs from the workflow are stored in the `work/` directory. An example input file for the EPIC CWL workflow found [here](https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/EPIC/workflow/steps/epic/epic.cwl) can be found in the `example_inputs/` directory of this repository.
+`nf-cwl-wrap` takes a `.cwl` workflow file (`cwl_file`) and a `.csv` input file (`s3_file`). The `.csv` file is expected to be in the following format:
 
+```
+data_file,input_file
+s3://iatlas-project-tower-bucket/iatlas_fpkm.tsv,s3://iatlas-project-tower-bucket/immune_subtype_clustering_input.json
+```
+
+It should contain paths to a `data_file` - the input data for the CWL workflow, and an `input_file` - a `.json` or `.yaml` file containing the required metadata for the CWL workflow run. The `s3_file` can contain multiple rows in this format. It will create a channel for each row and execute the CWL workflow on the files provided in parallel. Outputs are stored in the working directory for each process execution.
+
+The `s3_file` format is compatible with [`nf-synstage`](https://github.com/Sage-Bionetworks-Workflows/nf-synstage) so that users can first stage their `data_file`'s and `input_file`'s in S3 buckets ahead of Nextflow Tower runs with this repository.
+ 
 ## Quick Start
 
 1. Install [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=22.10.1`)
