@@ -29,6 +29,8 @@ WORKDIR /cwltool
 
 # Install cwltool 
 ENV BLACK_VERSION="22.0"
+#upgrade pip
+RUN pip install --upgrade pip
 # The following comes directly from the original docker image (except for ENV version pinning and install location)
 RUN CWLTOOL_USE_MYPYC=1 MYPYPATH=mypy-stubs pip wheel --no-binary schema-salad \
     --wheel-dir=/wheels .[deps]  # --verbose
