@@ -10,7 +10,7 @@ process EXECUTE_CWL_WORKFLOW {
     debug true
     // containerOptions only work when run locally, aws batch volume mounting in nextflow.config for Tower runs
     containerOptions = '-v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp -v \$PWD:/input'
-    container "ghcr.io/sage-bionetworks-workflows/nf-cwl-wrap:1.0"
+    container "ghcr.io/sage-bionetworks-workflows/nf-cwl-wrap:latest"
 
     input:
     path cwl_file
