@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [bwmac/IBCDPE-565/implement_ci]
+    branches: [main]
 
 jobs:
   docker-publish:
