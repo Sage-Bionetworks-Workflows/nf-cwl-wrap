@@ -12,7 +12,7 @@ params.registry = "docker.io"
 process EXECUTE_CWL_WORKFLOW {
     debug true
     
-    secret "SYNAPSE_AUTH_TOKEN"
+    secret "DOCKERHUB_ACCESS_TOKEN"
     
     // containerOptions only work when run locally, aws batch volume mounting in nextflow.config for Tower runs
     containerOptions = '-v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp -v \$PWD:/input'
@@ -29,11 +29,10 @@ process EXECUTE_CWL_WORKFLOW {
     script:
     """
     #!/bin/sh
-    echo \$SYNAPSE_AUTH_TOKEN
+    if [ -n "${params.registry_username}" ]; then
+        echo \$DOCKERHUB_ACCESS_TOKEN | docker login ${params.registry} -u ${params.registry_username} --password-stdin
+    cwltool ${cwl_file} ${input_file}
     """
-    // if [ -n "${params.registry_username}" ]; then
-    //     echo \$DOCKERHUB_ACCESS_TOKEN | docker login ${params.registry} -u ${params.registry_username} --password-stdin
-    // cwltool ${cwl_file} ${input_file}
 }
 
 workflow {
