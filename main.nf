@@ -18,7 +18,6 @@ process EXECUTE_CWL_WORKFLOW {
     containerOptions = '-v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp -v \$PWD:/input'
     container "ghcr.io/sage-bionetworks-workflows/nf-cwl-wrap:latest"
 
-
     input:
     path cwl_file
     tuple path(input_file), path(data_file)
