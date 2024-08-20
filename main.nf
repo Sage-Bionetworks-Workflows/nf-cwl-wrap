@@ -31,6 +31,7 @@ process EXECUTE_CWL_WORKFLOW {
     #!/bin/sh
     if [ -n "${params.registry_username}" ]; then
         echo \$DOCKERHUB_ACCESS_TOKEN | docker login ${params.registry} -u ${params.registry_username} --password-stdin
+    fi
     cwltool ${cwl_file} ${input_file}
     """
 }
