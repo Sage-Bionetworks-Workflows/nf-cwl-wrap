@@ -13,7 +13,6 @@ RUN echo \
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
     git \
     gcc \
-    python3 \
     libxml2-dev \
     libxslt-dev \
     libc-dev \
@@ -24,7 +23,7 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
     docker-ce 
 
 # Clone cwltool repo - specific commit ID to control changes
-RUN git clone https://github.com/common-workflow-language/cwltool.git && cd cwltool && git checkout 40c338c
+RUN git clone https://github.com/common-workflow-language/cwltool.git
 WORKDIR /cwltool
 
 # Install cwltool 
@@ -33,7 +32,7 @@ ENV BLACK_VERSION="22.0"
 RUN pip install --upgrade pip
 # The following comes directly from the original docker image (except for ENV version pinning and install location)
 RUN CWLTOOL_USE_MYPYC=1 MYPYPATH=mypy-stubs pip wheel --no-binary schema-salad \
-    --wheel-dir=/wheels .[deps]  # --verbose
+    --wheel-dir=/wheels .[deps]
 RUN rm /wheels/schema_salad*
 RUN pip install "black~=$BLACK_VERSION"
 RUN SCHEMA_SALAD_USE_MYPYC=1 MYPYPATH=mypy-stubs pip wheel --no-binary schema-salad \
