@@ -1,6 +1,0 @@
-{
-    "input_expression_file": {
-        "path": "https://raw.githubusercontent.com/CRI-iAtlas/iatlas-workflows/develop/sample_files/expression/expression.tsv",
-        "class": "File"
-    }
-}

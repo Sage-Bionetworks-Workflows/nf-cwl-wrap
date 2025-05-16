@@ -1,4 +1,58 @@
-# nf-cwl-wrap
+# NF-CWL-Wrap
+
+A Nextflow wrapper for executing CWL workflows.
+
+## Example Usage
+
+This repository includes a simple "Hello World" example that demonstrates how to use the wrapper. The example concatenates pairs of words from different languages.
+
+### Prerequisites
+
+- Docker
+- Nextflow
+- CWL Tool
+
+### Building the Example Docker Image
+
+First, build the Docker image for the example workflow:
+
+```bash
+cd example/workflow
+docker build -t hello-world-cwl:latest .
+```
+
+### Running the Example
+
+The example is configured to run out of the box. Simply run:
+
+```bash
+nextflow run main.nf
+```
+
+This will:
+1. Read the manifest file at `example/inputs/manifest.csv`
+2. Process each row, which contains pairs of files to concatenate
+3. Use the CWL workflow at `example/workflow/hello_world.cwl`
+4. Output the concatenated results
+
+### Example Structure
+
+- `example/inputs/`: Contains the input files and manifest
+  - `manifest.csv`: Lists pairs of files to process
+  - Various text files with words in different languages
+- `example/workflow/`: Contains the CWL workflow and Docker configuration
+  - `hello_world.cwl`: The CWL workflow definition
+  - `Dockerfile`: Defines the container for the workflow
+  - `concat.py`: The Python script that performs the concatenation
+
+### Configuration
+
+The workflow is configured in `nextflow.config`. You can modify the following parameters:
+
+- `params.manifest`: Path to the input manifest file
+- `params.cwl_file`: Path to the CWL workflow file
+- `params.registry_username`: Docker registry username (if needed)
+- `params.registry`: Docker registry URL
 
 ## Introduction
 

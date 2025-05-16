@@ -1,0 +1,4 @@
+input_file,data_file
+example/inputs/hello.txt,example/inputs/world.txt
+example/inputs/hola.txt,example/inputs/mundo.txt
+example/inputs/bonjour.txt,example/inputs/le_monde.txt 
