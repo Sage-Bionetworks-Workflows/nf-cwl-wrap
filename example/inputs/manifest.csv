@@ -1,4 +1,4 @@
 input_file,data_file
-example/inputs/hello.txt,example/inputs/world.txt
-example/inputs/hola.txt,example/inputs/mundo.txt
-example/inputs/bonjour.txt,example/inputs/le_monde.txt 
+s3://iatlas-project-tower-bucket/CWL/hello.txt,s3://iatlas-project-tower-bucket/CWL/world.txt
+s3://iatlas-project-tower-bucket/CWL/hola.txt,s3://iatlas-project-tower-bucket/CWL/mundo.txt
+s3://iatlas-project-tower-bucket/CWL/bonjour.txt,s3://iatlas-project-tower-bucket/CWL/le_monde.txt 
