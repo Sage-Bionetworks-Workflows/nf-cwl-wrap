@@ -21,4 +21,4 @@ outputs:
 
 requirements:
   DockerRequirement:
-    dockerPull: bwmac2/hello-world-cwl:latest
+    dockerPull: ubuntu:latest
