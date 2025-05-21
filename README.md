@@ -8,9 +8,9 @@ This repository includes a simple "Hello World" example that demonstrates how to
 
 ### Prerequisites
 
-- Docker
-- Nextflow
-- CWL Tool
+- [Docker](https://docs.docker.com/engine/install/)
+- [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html)
+- [CWL Tool](https://github.com/common-workflow-language/cwltool)
 
 ### Running the Example
 
